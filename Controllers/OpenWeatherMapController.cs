@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace api.openweathermap.Controllers
 {
     [Route("api/[controller]")]
-    public class SampleDataController : Controller
+    public class OpenWeatherMapController : Controller
     {
         private static string[] Summaries = new[]
         {
