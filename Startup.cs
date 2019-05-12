@@ -5,14 +5,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OpenWeatherMap;
 
 namespace api.openweathermap
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.Secret.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -21,6 +29,10 @@ namespace api.openweathermap
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton<IConfiguration>(Configuration);
+            var secretKey = Configuration.GetSection("Keys").GetValue("OWMKey", string.Empty);
+            services.AddSingleton<OpenWeatherMapClient>(new OpenWeatherMapClient(secretKey));
+
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
