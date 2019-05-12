@@ -1,8 +1,10 @@
-public class WeatherForecast
+public class Weather
 {
     public string DateFormatted { get; set; }
     public double TemperatureC { get; set; }
     public string Summary { get; set; }
+
+    public string City {get; set;}
 
     public int TemperatureF
     {

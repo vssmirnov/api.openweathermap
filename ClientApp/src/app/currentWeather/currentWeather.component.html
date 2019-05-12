@@ -1,0 +1,7 @@
+<h1>Current weather</h1>
+
+<p *ngIf="!currentWeather"><em>Loading...</em></p>
+
+<div *ngIf="currentWeather">
+    <p>Weather in {{currentWeather.city}} : {{currentWeather.temperatureC}}</p>
+</div>

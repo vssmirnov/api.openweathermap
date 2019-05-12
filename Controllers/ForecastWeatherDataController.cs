@@ -16,27 +16,25 @@ namespace api.openweathermap.Controllers
             this.client = client;
         }
 
-        private static string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly OpenWeatherMapClient client;
 
         [HttpGet("[action]")]
-        public IEnumerable<WeatherForecast> WeatherForecasts()
+        public IEnumerable<Weather> WeatherForecasts(string city)
         {
-            var forecasts = client.Forecast.GetByName("Izhevsk");
-            forecasts.Wait();
-            if (forecasts.IsCompletedSuccessfully)            
-                return forecasts.Result.Forecast.Select(forecastTime => new WeatherForecast
-                {
-                    DateFormatted = forecastTime.Day.ToString("d"),
-                    TemperatureC = forecastTime.Temperature.Value,
-                    Summary = string.Empty
-                });
-
-            throw forecasts.Exception;
+            try{
+                var forecasts = client.Forecast.GetByName(cityName: city, count: 10);
+                forecasts.Wait();
+                if (forecasts.IsCompletedSuccessfully)
+                    return forecasts.Result.Forecast.Select(forecastTime => new Weather
+                    {
+                        DateFormatted = forecastTime.To.ToString(),
+                        TemperatureC = forecastTime.Temperature.Value,
+                        Summary = forecastTime.Symbol.Name
+                    });
+            } catch(Exception ex){
+                Console.WriteLine(ex.Message);
+            }
+            return new List<Weather>();            
         }
     }
 }

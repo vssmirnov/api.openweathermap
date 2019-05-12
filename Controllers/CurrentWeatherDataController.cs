@@ -3,27 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using OpenWeatherMap;
 
 namespace api.openweathermap.Controllers
 {
     [Route("api/[controller]")]
     public class CurrentWeatherDataController : Controller
     {
-        private static string[] Summaries = new[]
+        private readonly OpenWeatherMapClient client;
+
+        public CurrentWeatherDataController(OpenWeatherMapClient client)
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+            this.client = client;
+        }
 
         [HttpGet("[action]")]
-        public WeatherForecast Weather()
+        public Weather CurrentWeather(string city)
         {
-            var rng = new Random();
-            return new WeatherForecast
+            try
             {
-                DateFormatted = DateTime.Now.ToString("d"),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            };
+                var currentWeather = client.CurrentWeather.GetByName(cityName: city);
+                currentWeather.Wait();
+                if (currentWeather.IsCompletedSuccessfully)                    
+                    return new Weather
+                    {
+                        City = currentWeather.Result.City.Name,
+                        TemperatureC = currentWeather.Result.Temperature.Value,
+                    };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return new Weather();
         }        
     }
 }
