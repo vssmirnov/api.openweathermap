@@ -9,6 +9,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { ForecastComponent } from './forecast/forecast.component';
 import { CurrentWeatherComponent } from './currentWeather/currentWeather.component';
+import { SearchComponent } from './search/search.component';
+import { SearchService } from './search/search.service';
 
 @NgModule({
   declarations: [
@@ -16,19 +18,20 @@ import { CurrentWeatherComponent } from './currentWeather/currentWeather.compone
     NavMenuComponent,
     HomeComponent,
     ForecastComponent,
+    SearchComponent,
     CurrentWeatherComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    FormsModule,
+    FormsModule,    
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'forecast', component: ForecastComponent },
-      { path: 'current-weather', component: CurrentWeatherComponent },
+      { path: 'current-weather', component: CurrentWeatherComponent },      
     ])
   ],
-  providers: [],
+  providers: [SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

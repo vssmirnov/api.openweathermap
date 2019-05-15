@@ -1,0 +1,6 @@
+<nav *ngIf="search.visible" class="navbar navbar-light bg-light">
+    <div class="form-inline">
+        <input class="form-control" type="search" [(ngModel)]="search.city" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit" (click)="onClick()">Search</button>
+    </div>
+</nav>
