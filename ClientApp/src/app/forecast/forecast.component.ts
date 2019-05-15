@@ -2,18 +2,21 @@ import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SearchService } from '../search/search.service';
 import { Search } from '../search/search.model';
+import { ForecastService } from './forecast.service';
 
 @Component({
   selector: 'app-forecast',
   templateUrl: './forecast.component.html'
 })
 export class ForecastComponent {
-  public forecasts: WeatherForecast[];
+  forecasts: WeatherForecast[];
+  search: Search;
   
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private searchService: SearchService) {
+  constructor(private forecastService: ForecastService, private searchService: SearchService) {    
     this.searchService.display(true);
-    http.get<WeatherForecast[]>(baseUrl + 'api/ForecastWeatherData/WeatherForecasts?city=Izhevsk').subscribe(result => {
-      this.forecasts = result;
-    }, error => console.error(error));
+    this.searchService.search.subscribe(search => {
+      this.search = search;
+      this.forecastService.getData().subscribe(forecasts => this.forecasts = forecasts);
+    })   
   }
 }

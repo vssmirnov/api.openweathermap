@@ -1,18 +1,23 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { SearchService } from '../search/search.service';
+import { CurrentWeatherService } from './currentWeather.service';
+import { Search } from '../search/search.model';
 
 @Component({
     selector: 'app-current-weather',
-    templateUrl: './currentWeather.component.html'
+    moduleId: module.id,
+    templateUrl: 'currentWeather.component.html'
 })
 export class CurrentWeatherComponent {
-    public currentWeather: CurrentWeather;
+    currentWeather: CurrentWeather;
+    search: Search;
 
-    constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private searchService: SearchService) {
+    constructor(private currentWeatherService: CurrentWeatherService, private searchService: SearchService) {
         this.searchService.display(true);
-        http.get<CurrentWeather>(baseUrl + 'api/CurrentWeatherData/CurrentWeather?city=Izhevsk').subscribe(result => {
-            this.currentWeather = result;
-        }, error => console.error(error));
+        this.currentWeatherService.getData().subscribe(weather => this.currentWeather = weather)
+        this.searchService.search.subscribe(search => {  
+            this.search = search;
+           // this.currentWeatherService.getData().subscribe(weather => this.currentWeather = weather);
+        })        
     }
 }

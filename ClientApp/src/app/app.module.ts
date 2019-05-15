@@ -11,6 +11,8 @@ import { ForecastComponent } from './forecast/forecast.component';
 import { CurrentWeatherComponent } from './currentWeather/currentWeather.component';
 import { SearchComponent } from './search/search.component';
 import { SearchService } from './search/search.service';
+import { CurrentWeatherService } from './currentWeather/currentWeather.service';
+import { ForecastService } from './forecast/forecast.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,7 @@ import { SearchService } from './search/search.service';
       { path: 'current-weather', component: CurrentWeatherComponent },      
     ])
   ],
-  providers: [SearchService],
+  providers: [SearchService, CurrentWeatherService, ForecastService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

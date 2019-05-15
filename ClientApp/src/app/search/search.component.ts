@@ -8,7 +8,7 @@ import { SearchService } from './search.service';
     templateUrl: 'search.component.html',
 })
 export class SearchComponent {
-    search: Search;    
+    search: Search = new Search('');    
 
     constructor(private searchService: SearchService) {        
         this.searchService.search.subscribe(s => {this.search = s;});        
