@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { ForecastComponent } from './forecast/forecast.component';
+import { ForecastComponent } from "./forecast/ForecastComponent";
 import { CurrentWeatherComponent } from './currentWeather/currentWeather.component';
 import { SearchComponent } from './search/search.component';
 import { SearchService } from './search/search.service';

@@ -1,10 +1,10 @@
 <h1>Weather forecast</h1>
 
-<p *ngIf="!forecasts"><em>Loading...</em></p>
+<p *ngIf="!forecasts && search && search.city"><em>Loading...</em></p>
 
+<p *ngIf="search && !search.city"><em>You could select city</em></p>
 
-
-<table class='table' *ngIf="forecasts">
+<table class='table' *ngIf="forecasts && search && search.city">
   <thead>
     <tr>
       <th>Date</th>

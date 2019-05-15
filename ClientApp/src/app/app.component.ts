@@ -3,7 +3,8 @@ import {SearchComponent} from '../app/search/search.component';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  moduleId: module.id,
+  templateUrl: 'app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {

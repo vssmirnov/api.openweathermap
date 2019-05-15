@@ -1,22 +1,18 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 import { Search } from "./search.model";
 import { Observable } from "rxjs/Observable";
-import { ForecastService } from "../forecast/forecast.service";
-import { CurrentWeatherService } from "../currentWeather/currentWeather.service";
+import { Subscription } from "rxjs/Subscription";
 
 @Injectable()
-export class SearchService {            
+export class SearchService implements OnDestroy {        
     private currentSearch: Search;
+    subscribtion: Subscription;
     private subject = new Subject<Search>();
 
-    constructor(private forecastService: ForecastService, private currentWeatherService: CurrentWeatherService){        
+    constructor(){        
         this.currentSearch = new Search("", false);
-        this.search.subscribe(s => {
-            this.currentSearch = s;
-            this.currentWeatherService.changeData(s.city)
-            this.forecastService.changeData(s.city)
-        });        
+        this.subscribtion = this.search.subscribe(s => {this.currentSearch = s;});        
     }
 
     changeSearch(search: Search) {
@@ -28,7 +24,15 @@ export class SearchService {
         this.changeSearch(this.currentSearch);
     }
 
+    getCurrentSearch(): Search {
+        return this.currentSearch;
+    }
+
     get search(): Observable<Search> {
         return this.subject;
     }
+
+    ngOnDestroy(): void {
+        this.subscribtion.unsubscribe()
+    }        
 }

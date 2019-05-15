@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { SearchService } from '../search/search.service';
-import { Search } from '../search/search.model';
 
 @Component({
   selector: 'app-nav-menu',
@@ -9,10 +7,8 @@ import { Search } from '../search/search.model';
 })
 export class NavMenuComponent {
   isExpanded = false;
-  search: Search;
-
-  constructor(private searchService: SearchService){
-    this.searchService.search.subscribe(m => this.search = m);
+  
+  constructor(){    
   }
 
   collapse() {    
