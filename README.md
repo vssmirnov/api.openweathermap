@@ -1,10 +1,13 @@
-# api.openweathermap
-api.openweathermap
+# Project
+Open weather map
 
-Для работы проекта необходимо добавить в корень проекта файл: appsettings.Secret.json.
-JSON файла представлен ниже:
+# Before start work
+Before start work necessary to add the file: appsettings.Secret.json.
+Body this file:
+```json
 {
     "Keys": {
         "OWMKey": "Some key from service Open Weather map"
     }
 }
+```
