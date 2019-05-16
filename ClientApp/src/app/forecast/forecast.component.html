@@ -1,24 +1,22 @@
 <h1>Weather forecast</h1>
 
-<p *ngIf="!forecasts && search && search.city"><em>Loading...</em></p>
+<p *ngIf="!forecastData && search && search.city"><em>Loading...</em></p>
 
 <p *ngIf="search && !search.city"><em>You could select city</em></p>
 
-<table class='table' *ngIf="forecasts && search && search.city">
+<table class='table' *ngIf="forecastData && search && search.city">
   <thead>
     <tr>
       <th>Date</th>
-      <th>Temp. (C)</th>
       <th>Temp. (F)</th>
-      <th>Summary</th>
+      <th>Cloud</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.dateFormatted }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
+    <tr *ngFor="let forecastTime of forecastData.forecast">
+      <td>{{ forecastTime.to | date :'short' }}</td>
+      <td>{{ forecastTime.temperature.value }}</td>
+      <td>{{ forecastTime.clouds.value }}</td>
     </tr>
   </tbody>
 </table>

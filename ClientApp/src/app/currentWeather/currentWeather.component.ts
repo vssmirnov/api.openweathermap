@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
     templateUrl: 'currentWeather.component.html'
 })
 export class CurrentWeatherComponent implements OnDestroy {
-    currentWeather: CurrentWeather;
+    currentWeather: Weather;
     subscribtion: Subscription;
     search: Search;
 
@@ -19,9 +19,10 @@ export class CurrentWeatherComponent implements OnDestroy {
         this.search = searchService.getCurrentSearch();        
         this.subscribtion = this.currentWeatherService.getData(this.search.city).subscribe(weather => this.currentWeather = weather)
         this.searchService.search.subscribe(search => {  
+            console.log(search);
             this.search = search;
             this.subscribtion.unsubscribe();
-            this.subscribtion = this.currentWeatherService.getData(this.search.city).subscribe(weather => this.currentWeather = weather);
+            this.subscribtion = this.currentWeatherService.getData(this.search.city).subscribe(weather => console.log(weather));
         })        
     }
 

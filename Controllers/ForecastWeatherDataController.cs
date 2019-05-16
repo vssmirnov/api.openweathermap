@@ -19,22 +19,9 @@ namespace api.openweathermap.Controllers
         private readonly OpenWeatherMapClient client;
 
         [HttpGet("[action]")]
-        public IEnumerable<Weather> WeatherForecasts(string city)
+        public Task<ForecastResponse> WeatherForecasts(string city)
         {
-            try{
-                var forecasts = client.Forecast.GetByName(cityName: city, count: 10);
-                forecasts.Wait();
-                if (forecasts.IsCompletedSuccessfully)
-                    return forecasts.Result.Forecast.Select(forecastTime => new Weather
-                    {
-                        DateFormatted = forecastTime.To.ToString(),
-                        TemperatureC = forecastTime.Temperature.Value,
-                        Summary = forecastTime.Symbol.Name
-                    });
-            } catch(Exception ex){
-                Console.WriteLine(ex.Message);
-            }
-            return new List<Weather>();            
+            return client.Forecast.GetByName(cityName: city, count: 10);
         }
     }
 }

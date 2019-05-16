@@ -1,0 +1,4 @@
+interface Clouds
+{
+    value: string;
+}

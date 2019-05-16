@@ -10,18 +10,18 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: './forecast.component.html'
 })
 export class ForecastComponent implements OnDestroy {  
-  forecasts: WeatherForecast[];
+  forecastData: ForecastData;
   subscribtion: Subscription;
   search: Search;
   
   constructor(private forecastService: ForecastService, private searchService: SearchService) {    
     this.searchService.display(true);
     this.search = searchService.getCurrentSearch();
-    this.subscribtion = this.forecastService.getData(this.search.city).subscribe(forecasts => this.forecasts = forecasts)
+    this.subscribtion = this.forecastService.getData(this.search.city).subscribe(forecastData => this.forecastData = forecastData)
     this.searchService.search.subscribe(search => {
       this.search = search;
       this.subscribtion.unsubscribe();
-      this.subscribtion = this.forecastService.getData(this.search.city).subscribe(forecasts => this.forecasts = forecasts);
+      this.subscribtion = this.forecastService.getData(this.search.city).subscribe(forecastData => { console.log(forecastData); this.forecastData = forecastData;});
     })   
   }
   

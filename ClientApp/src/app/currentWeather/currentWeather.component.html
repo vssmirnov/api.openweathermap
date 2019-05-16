@@ -5,5 +5,5 @@
 <p *ngIf="search && !search.city"><em>You could select city</em></p>
 
 <div *ngIf="currentWeather && search && search.city">
-    <p>Weather in {{currentWeather.city}} : {{currentWeather.temperatureC}}</p>
+    <p>Weather in {{currentWeather.city.name}} : {{currentWeather.temperature.value}}</p>
 </div>

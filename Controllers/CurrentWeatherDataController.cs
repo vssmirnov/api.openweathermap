@@ -18,24 +18,9 @@ namespace api.openweathermap.Controllers
         }
 
         [HttpGet("[action]")]
-        public Weather CurrentWeather(string city)
+        public Task<CurrentWeatherResponse> CurrentWeather(string city)
         {
-            try
-            {
-                var currentWeather = client.CurrentWeather.GetByName(cityName: city);
-                currentWeather.Wait();
-                if (currentWeather.IsCompletedSuccessfully)                    
-                    return new Weather
-                    {
-                        City = currentWeather.Result.City.Name,
-                        TemperatureC = currentWeather.Result.Temperature.Value,
-                    };
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            return new Weather();
+            return client.CurrentWeather.GetByName(cityName: city);
         }        
     }
 }
