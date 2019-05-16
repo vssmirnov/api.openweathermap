@@ -1,9 +1,11 @@
 <h1>Current weather</h1>
 
-<p *ngIf="!currentWeather && search && search.city"><em>Loading...</em></p>
+<p *ngIf="search.loading"><em>Loading...</em></p>
 
-<p *ngIf="search && !search.city"><em>You could select city</em></p>
+<p *ngIf="!search.city || search.isErrorLoading"><em>You could select city</em></p>
 
-<div *ngIf="currentWeather && search && search.city">
+<p *ngIf="search.isErrorLoading"><em>We couldn't search information about this city: {{errorCity}}</em></p>
+
+<div *ngIf="search.loaded">
     <p>Weather in {{currentWeather.city.name}} : {{currentWeather.temperature.value}}</p>
 </div>

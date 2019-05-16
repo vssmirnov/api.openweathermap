@@ -13,7 +13,7 @@ export class CurrentWeatherService {
         if (city) {
             return this.http
             .get<Weather>(this.baseUrl + 'api/CurrentWeatherData/CurrentWeather?city=' + city)
-                .catch((err: HttpErrorResponse) => { console.log('An error occurred:', err.error); return empty<Weather>();});
+                .catch((err: HttpErrorResponse) => { console.log('An error occurred:', err.error); throw err;});
         }
         return empty<Weather>();
     }

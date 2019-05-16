@@ -1,10 +1,12 @@
 <h1>Weather forecast</h1>
 
-<p *ngIf="!forecastData && search && search.city"><em>Loading...</em></p>
+<p *ngIf="search.loading"><em>Loading...</em></p>
 
-<p *ngIf="search && !search.city"><em>You could select city</em></p>
+<p *ngIf="!search.city || search.isErrorLoading"><em>You could select city</em></p>
 
-<table class='table' *ngIf="forecastData && search && search.city">
+<p *ngIf="search.isErrorLoading"><em>We couldn't search information about this city: {{errorCity}}</em></p>
+
+<table class='table' *ngIf="search.loaded">
   <thead>
     <tr>
       <th>Date</th>

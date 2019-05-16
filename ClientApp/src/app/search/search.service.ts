@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from "@angular/core";
 import { Subject } from "rxjs/Subject";
-import { Search } from "./search.model";
+import { Search } from "../models/search.model";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 
@@ -11,7 +11,7 @@ export class SearchService implements OnDestroy {
     private subject = new Subject<Search>();
 
     constructor(){        
-        this.currentSearch = new Search("", false);
+        this.currentSearch = new Search();
         this.subscribtion = this.search.subscribe(s => {this.currentSearch = s;});        
     }
 

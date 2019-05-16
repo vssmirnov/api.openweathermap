@@ -12,7 +12,7 @@ export class ForecastService {
         if (city) {
             return this.http
                 .get<ForecastData>(this.baseUrl + 'api/ForecastWeatherData/WeatherForecasts?city=' + city)
-                .catch((err: HttpErrorResponse) => { console.log('An error occurred:', err.error); return empty<ForecastData>(); });
+                .catch((err: HttpErrorResponse) => { console.log('An error occurred:', err.error); throw err; });
         }
         return empty<ForecastData>();
     }
